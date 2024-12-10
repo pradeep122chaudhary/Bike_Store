@@ -1,68 +1,254 @@
-{% extends 'header_footer.html' %}
-
-{% block main %}
-<div class="container mt-5">
-    <div class="row">
-        <!-- Card 1 -->
-        <div class="col-md-4 mb-4 d-flex justify-content-center">
-            <div class="card bg-dark text-white">
-                <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                    <h5 class="card-title">Card Title 1</h5>
-                    <p class="card-text">Hi, I am good. This is a description for the first card. This description can be a brief overview of what the card is about.</p>
-                    <p class="card-text"><strong>Count of Descriptions:</strong> 32</p>
-                    <a href="#" class="btn btn-light">View More</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="col-md-4 mb-4 d-flex justify-content-center">
-            <div class="card bg-dark text-white">
-                <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                    <h5 class="card-title">Card Title 2</h5>
-                    <p class="card-text">Hi, I am good. This is a description for the second card. Another short text that explains the contents of this card.</p>
-                    <p class="card-text"><strong>Count of Descriptions:</strong> 32</p>
-                    <a href="#" class="btn btn-light">View More</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="col-md-4 mb-4 d-flex justify-content-center">
-            <div class="card bg-dark text-white">
-                <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                    <h5 class="card-title">Card Title 3</h5>
-                    <p class="card-text">Hi, I am good. Here is a description for the third card. This card might have different content but follows the same design.</p>
-                    <p class="card-text"><strong>Count of Descriptions:</strong> 32</p>
-                    <a href="#" class="btn btn-light">View More</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="col-md-4 mb-4 d-flex justify-content-center">
-            <div class="card bg-dark text-white">
-                <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                    <h5 class="card-title">Card Title 4</h5>
-                    <p class="card-text">Hi, I am good. This is the fourth card with a description. It will look similar to the other cards in layout but with a unique description.</p>
-                    <p class="card-text"><strong>Count of Descriptions:</strong> 32</p>
-                    <a href="#" class="btn btn-light">View More</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Card 5 -->
-        <div class="col-md-4 mb-4 d-flex justify-content-center">
-            <div class="card bg-dark text-white">
-                <div class="card-body d-flex flex-column justify-content-center align-items-center text-center">
-                    <h5 class="card-title">Card Title 5</h5>
-                    <p class="card-text">Hi, I am good. This is the fifth card description. It is another unique card with text and a button.</p>
-                    <p class="card-text"><strong>Count of Descriptions:</strong> 32</p>
-                    <a href="#" class="btn btn-light">View More</a>
-                </div>
-            </div>
-        </div>
-
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}OsnicDigital | Home{% endblock title %}
+{% block content %}
+<div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
     </div>
-</div>
-{% endblock %}
+    <section class="section dashboard">
+     
+     <div class="row">
+
+      <!-- Left side columns -->
+      <div class="col-lg-12">
+        <div class="row">
+
+          <!-- Sales Card -->
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card sales-card">
+
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+
+              <div class="card-body">
+                <h5 class="card-title">Trade <span>| Today</span></h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-bar-chart"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6>145</h6>
+                    <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- End Sales Card -->
+
+
+          <!-- Revenue Card -->
+          <div class="col-xxl-4 col-md-6">
+            <div class="card info-card revenue-card">
+
+              <div class="filter">
+                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <li class="dropdown-header text-start">
+                    <h6>Filter</h6>
+                  </li>
+
+                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                </ul>
+              </div>
+
+              <div class="card-body">
+                <h5 class="card-title">Revenue <span>| This Month</span></h5>
+
+                <div class="d-flex align-items-center">
+                  <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                    <i class="bi bi-currency-rupee"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6><i class="bi bi-currency-rupee"></i>3,264</h6>
+                    <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- End Revenue Card -->
+      
+            <!-- Revenue Card -->
+            <div class="col-xxl-4 col-md-6">
+                <div class="card info-card revenue-card">
+    
+                  <div class="filter">
+                    <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                      <li class="dropdown-header text-start">
+                        <h6>Filter</h6>
+                      </li>
+    
+                      <li><a class="dropdown-item" href="#">Today</a></li>
+                      <li><a class="dropdown-item" href="#">This Month</a></li>
+                      <li><a class="dropdown-item" href="#">This Year</a></li>
+                    </ul>
+                  </div>
+    
+                  <div class="card-body">
+                    <h5 class="card-title">Revenue <span>| This Month</span></h5>
+    
+                    <div class="d-flex align-items-center">
+                      <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                        <i class="bi bi-currency-rupee"></i>
+                      </div>
+                      <div class="ps-3">
+                        <h6><i class="bi bi-currency-rupee"></i>3,264</h6>
+                        <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+    
+                      </div>
+                    </div>
+                  </div>
+    
+                </div>
+              </div><!-- End Revenue Card -->
+
+              
+         
+         
+
+       
+        </div>
+        <div class="row">
+
+            <!-- Sales Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card sales-card">
+  
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+  
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+  
+                <div class="card-body">
+                  <h5 class="card-title">Trade <span>| Today</span></h5>
+  
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-bar-chart"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>145</h6>
+                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+  
+                    </div>
+                  </div>
+                </div>
+  
+              </div>
+            </div><!-- End Sales Card -->
+  
+  
+            <!-- Revenue Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card revenue-card">
+  
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+  
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+  
+                <div class="card-body">
+                  <h5 class="card-title">Revenue <span>| This Month</span></h5>
+  
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-currency-rupee"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6><i class="bi bi-currency-rupee"></i>3,264</h6>
+                      <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+  
+                    </div>
+                  </div>
+                </div>
+  
+              </div>
+            </div><!-- End Revenue Card -->
+        
+              <!-- Revenue Card -->
+              <div class="col-xxl-4 col-md-6">
+                  <div class="card info-card revenue-card">
+      
+                    <div class="filter">
+                      <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                      <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                        <li class="dropdown-header text-start">
+                          <h6>Filter</h6>
+                        </li>
+      
+                        <li><a class="dropdown-item" href="#">Today</a></li>
+                        <li><a class="dropdown-item" href="#">This Month</a></li>
+                        <li><a class="dropdown-item" href="#">This Year</a></li>
+                      </ul>
+                    </div>
+      
+                    <div class="card-body">
+                      <h5 class="card-title">Revenue <span>| This Month</span></h5>
+      
+                      <div class="d-flex align-items-center">
+                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                          <i class="bi bi-currency-rupee"></i>
+                        </div>
+                        <div class="ps-3">
+                          <h6><i class="bi bi-currency-rupee"></i>3,264</h6>
+                          <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+      
+                        </div>
+                      </div>
+                    </div>
+      
+                  </div>
+                </div><!-- End Revenue Card -->
+  
+                
+           
+           
+  
+         
+          </div>
+      </div><!-- End Left side columns -->
+
+      
+    </div>
+    </section>
+
+{% endblock content %}
