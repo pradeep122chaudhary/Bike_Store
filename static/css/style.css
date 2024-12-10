@@ -1232,3 +1232,31 @@ h6 {
   font-size: 13px;
   color: #012970;
 }
+
+
+  .swal2-confirm{
+    display: inline-block;
+    font-weight: 400;
+    color: #fff;
+    background-color: #007bff; /* Bootstrap's .btn-primary background color */
+    border-color: #007bff; /* Bootstrap's .btn-primary border color */
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: .25rem; /* Bootstrap button border radius */
+    padding: .375rem .75rem; /* Bootstrap button padding */
+    font-size: 1rem; /* Bootstrap font size */
+    line-height: 1.5;
+    background-image: none;
+
+  
+  }
+  .swal2-confirm:hover {
+    background-color: #0069d9; /* Bootstrap's .btn-primary hover background */
+    border-color: #0062cc; /* Bootstrap's .btn-primary hover border color */
+  }
+  
+  .swal2-confirm:focus, .swal2-confirm.focus {
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5); /* Bootstrap focus box-shadow */
+  }

@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}CRM | Home {% endblock title %}
+{% block content %}
+
+<div class="pagetitle">
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item active">New Lead</li>
+        </ol>
+      </nav>
+    </div>
+    <section class="section">
+     
+     <div class="row">
+
+      <!-- Left side columns -->
+      <div class="col-lg-12">
+
+      
+
+          <div class="card">
+            <div class="card-body">
+           
+
+              <!-- Vertical Form -->
+               
+              <form  style="padding-top: 15px;" method="POST" id="lead_from_id">
+                {% csrf_token %}
+                <div class="row g-3">
+                <div class="col-6">
+                  <label for="customer_id" class="form-label">Customer<sup>*</sup></label>
+                  <input type="text" class="form-control" name='customer' id="customer_id" required>
+                </div>
+                <div class="col-6">
+                  <label for="inputEmail4" class="form-label">Mobile</label>
+                  <input type="email" class="form-control" id="inputEmail4">
+                </div>
+              </div>
+              <div class="row g-3">
+                <div class="col-6">
+                  <label for="inputNanme4" class="form-label">Gender</label>
+                  <input type="date" class="form-control" id="" required>
+                  
+
+                 
+                </div>
+                <div class="col-6">
+                  <label for="" class="form-label">Delivery Date</label>
+                  <input type="date" class="form-control" id="" required>
+                  
+                </div>
+              </div>
+
+              <div class="row g-3">
+                <div class="col-6">
+                  <label for="inputNanme4" class="form-label">Select Bike Model</label>
+                  <select class="form-control">
+                    <option value=""></option>
+                    <option value="">Rohit</option>
+                    <option value="">Rohit</option>
+                    <option value="">Rohit</option>
+                    <option value="">Rohit</option>
+                  </select>
+                </div>
+               
+              </div>
+              <div class="row g-3">
+                <div class="col-12">
+                  <label for="inputEmail4" class="form-label">Full Address</label>
+                 <textarea class="form-control" style="height:100px;"></textarea>
+                </div>
+              </div>
+             
+
+
+                    <br>
+              <div class="row">
+                <div class="col-6">
+                  <input type="button" class="btn btn-primary" value="Add" style="width: 100%;" onclick="submit_form()" >
+                </div>
+                <div class="col-6">
+                  <input type="button" class="btn btn-warning" value="Close" style="width: 100%;">
+                </div>
+              </div>
+
+
+              </form>
+
+            </div>
+          </div>
+
+       
+      </div><!-- End Left side columns -->
+
+      
+    </div>
+    </section>
+<script>
+  function submit_form() {
+    
+
+   
+  
+
+  Swal.fire({
+    title: 'Are you sure?',
+    text: 'Do you want to save data ?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, submit it!',
+   
+    cancelButtonText: 'Cancel',
+    allowOutsideClick: false,
+    // reverseButtons: true
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: '{% url "AddNewLead" %}', 
+        method: 'POST',
+        data: $('#lead_from_id').serialize(), 
+        headers:{
+          'X-CSRF-TOKEN':`{{ csrf_token }}`
+        },
+        success: function(response) {
+          
+          Swal.fire(response.title, response.message, response.status);
+        },
+        error: function(error) {
+          Swal.fire('Error!', 'Something went wrong. Please try again.', 'error');
+        }
+      });
+    } 
+    
+
+  });
+}
+
+
+</script>
+
+{% endblock content %}
