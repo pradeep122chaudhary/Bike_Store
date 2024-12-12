@@ -1,143 +1,174 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}CRM | Home {% endblock title %}
+
+{% block title %}CRM | New Lead {% endblock title %}
+
 {% block content %}
-
 <div class="pagetitle">
-      <nav>
+    <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item active">New Lead</li>
+            <li class="breadcrumb-item active">New Lead</li>
         </ol>
-      </nav>
-    </div>
-    <section class="section">
-     
-     <div class="row">
+    </nav>
+</div>
 
-      <!-- Left side columns -->
-      <div class="col-lg-12">
-
-      
-
-          <div class="card">
-            <div class="card-body">
-           
-
-              <!-- Vertical Form -->
-               
-              <form  style="padding-top: 15px;" method="POST" id="lead_from_id">
-                {% csrf_token %}
-                <div class="row g-3">
-                <div class="col-6">
-                  <label for="customer_id" class="form-label">Customer<sup>*</sup></label>
-                  <input type="text" class="form-control" name='customer' id="customer_id" required>
+<section class="section">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-lg">
+                <div class="card-body">
+                    <form id="lead_form_id" method="POST" novalidate>
+                        {% csrf_token %}
+                        <div class="row g-4">
+                            <!-- Customer Name -->
+                            <div class="col-md-6">
+                                <label for="customer_id" class="form-label">Customer<sup>*</sup></label>
+                                <input type="text" class="form-control border-primary" name="customer" id="customer_id" 
+                                       aria-label="Customer Name" placeholder="Enter customer name" required>
+                                <div class="invalid-feedback">Please enter the customer name.</div>
+                            </div>
+                            <!-- Mobile -->
+                            <div class="col-md-6">
+                                <label for="mobile_id" class="form-label">Mobile<sup>*</sup></label>
+                                <input type="tel" class="form-control border-primary" name="mobile" id="mobile_id" 
+                                       aria-label="Mobile Number" placeholder="Enter mobile number" pattern="[0-9]{10}" required>
+                                <div class="invalid-feedback">Please enter a valid 10-digit mobile number.</div>
+                            </div>
+                        </div>
+                        <div class="row g-4 mt-3">
+                            <!-- Gender -->
+                            <div class="col-md-6">
+                                <label for="gender_id" class="form-label">Gender<sup>*</sup></label>
+                                <select class="form-select border-primary" name="gender_id" id="gender_id" required>
+                                    <option value="" disabled selected>Select gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <div class="invalid-feedback">Please select a gender.</div>
+                            </div>
+                            <!-- Delivery Date -->
+                            <div class="col-md-6">
+                                <label for="delivery_date_id" class="form-label">Delivery Date<sup>*</sup></label>
+                                <input type="date" class="form-control border-primary" name="delivery_date" id="delivery_date_id" 
+                                       required>
+                                <div class="invalid-feedback">Please select a valid delivery date.</div>
+                            </div>
+                        </div>
+                        <div class="row g-4 mt-3">
+                            <!-- Bike Model -->
+                            <div class="col-md-6">
+                                <label for="bike_model_id" class="form-label">Bike Model<sup>*</sup></label>
+                                <select class="form-select border-primary" name="bike_model" id="bike_model_id" required>
+                                    <option value="" disabled selected>Select bike model</option>
+                                    {% for model in bike_models %}
+                                        <option value="{{ model.id }}">{{ model.name }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="invalid-feedback">Please select a bike model.</div>
+                            </div>
+                        </div>
+                        <div class="row g-4 mt-3">
+                            <!-- Full Address -->
+                            <div class="col-md-12">
+                                <label for="address_id" class="form-label">Full Address<sup>*</sup></label>
+                                <textarea class="form-control border-primary" name="address_id" id="address_id" rows="4" 
+                                          aria-label="Full Address" placeholder="Enter full address" required></textarea>
+                                <div class="invalid-feedback">Please enter the full address.</div>
+                            </div>
+                        </div>
+                        <div class="row g-4 mt-4">
+                            <!-- Buttons -->
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-success w-100" onclick="submit_form()">Add Lead</button>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="reset" class="btn btn-secondary w-100">Close</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="col-6">
-                  <label for="inputEmail4" class="form-label">Mobile</label>
-                  <input type="email" class="form-control" id="inputEmail4">
-                </div>
-              </div>
-              <div class="row g-3">
-                <div class="col-6">
-                  <label for="inputNanme4" class="form-label">Gender</label>
-                  <input type="date" class="form-control" id="" required>
-                  
-
-                 
-                </div>
-                <div class="col-6">
-                  <label for="" class="form-label">Delivery Date</label>
-                  <input type="date" class="form-control" id="" required>
-                  
-                </div>
-              </div>
-
-              <div class="row g-3">
-                <div class="col-6">
-                  <label for="inputNanme4" class="form-label">Select Bike Model</label>
-                  <select class="form-control">
-                    <option value=""></option>
-                    <option value="">Rohit</option>
-                    <option value="">Rohit</option>
-                    <option value="">Rohit</option>
-                    <option value="">Rohit</option>
-                  </select>
-                </div>
-               
-              </div>
-              <div class="row g-3">
-                <div class="col-12">
-                  <label for="inputEmail4" class="form-label">Full Address</label>
-                 <textarea class="form-control" style="height:100px;"></textarea>
-                </div>
-              </div>
-             
-
-
-                    <br>
-              <div class="row">
-                <div class="col-6">
-                  <input type="button" class="btn btn-primary" value="Add" style="width: 100%;" onclick="submit_form()" >
-                </div>
-                <div class="col-6">
-                  <input type="button" class="btn btn-warning" value="Close" style="width: 100%;">
-                </div>
-              </div>
-
-
-              </form>
-
             </div>
-          </div>
-
-       
-      </div><!-- End Left side columns -->
-
-      
+        </div>
     </div>
-    </section>
+</section>
+
 <script>
-  function submit_form() {
-    
+    document.addEventListener('DOMContentLoaded', function() {
+        var today = new Date().toISOString().split('T')[0];
+        document.getElementById('delivery_date_id').setAttribute('min', today);
+    });
 
-   
-  
-
-  Swal.fire({
-    title: 'Are you sure?',
-    text: 'Do you want to save data ?',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonText: 'Yes, submit it!',
-   
-    cancelButtonText: 'Cancel',
-    allowOutsideClick: false,
-    // reverseButtons: true
-  }).then((result) => {
-    if (result.isConfirmed) {
-      $.ajax({
-        url: '{% url "AddNewLead" %}', 
-        method: 'POST',
-        data: $('#lead_from_id').serialize(), 
-        headers:{
-          'X-CSRF-TOKEN':`{{ csrf_token }}`
-        },
-        success: function(response) {
-          
-          Swal.fire(response.title, response.message, response.status);
-        },
-        error: function(error) {
-          Swal.fire('Error!', 'Something went wrong. Please try again.', 'error');
+    document.getElementById('lead_form_id').addEventListener('submit', function(event) {
+        if (!this.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
         }
-      });
-    } 
-    
+        this.classList.add('was-validated');
+    });
 
-  });
-}
+    function submit_form() {
+        Swal.fire({
+            title: 'Confirm Submission',
+            text: 'Do you want to save this lead?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Add Lead',
+            cancelButtonText: 'Cancel',
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-secondary'
+            },
+            buttonsStyling: false
+        }).then((result) => {
+            if (result.isConfirmed) {
+                var form = document.getElementById('lead_form_id');
+                if (form.checkValidity()) {
+                    var formData = $('#lead_form_id').serializeArray();
+                    
+                    // Trim whitespace from customer name and full address
+                    formData.forEach(function(field) {
+                        if (field.name === 'customer') {
+                            field.value = field.value.trim();
+                        }
+                        if (field.name === 'address_id') {
+                            field.value = field.value.trim();
+                        }
+                    });
 
-
+                    $.ajax({
+                        url: '{% url "AddNewLead" %}',
+                        method: 'POST',
+                        data: $('#lead_form_id').serialize(),
+                        headers: {
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        beforeSend: function() {
+                            Swal.fire({
+                                title: 'Processing...',
+                                text: 'Please wait while we save the lead.',
+                                allowOutsideClick: false,
+                                didOpen: () => {
+                                    Swal.showLoading();
+                                }
+                            });
+                        },
+                        success: function(response) {
+                            Swal.fire(response.title, response.message, response.status).then(() => {
+                                $('#lead_form_id')[0].reset();
+                                form.classList.remove('was-validated');
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            Swal.fire('Error!', `Something went wrong: ${xhr.responseText}`, 'error');
+                        }
+                    });
+                } else {
+                    form.classList.add('was-validated');
+                }
+            }
+        });
+    }
 </script>
 
 {% endblock content %}

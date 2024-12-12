@@ -23,7 +23,7 @@ class BikeModel(models.Model):
 
 # 3. Delivery Order Management
 class DeliveryOrder(models.Model):
-    customer_name = models.CharField(max_length=255)
+    customer_name = models.CharField(max_length=255,)
     mobile = models.CharField(max_length=15)
     gender_choices = [
         ('Male', 'Male'),
@@ -38,8 +38,20 @@ class DeliveryOrder(models.Model):
     delivery_date = models.DateTimeField()
     status = models.ForeignKey("orders.StatusModel", on_delete=models.CASCADE)
     
+    def save(self, *args, **kwargs):
+        if not self.id:
+            # Start ID from 10001
+            max_id = DeliveryOrder.objects.all().aggregate(models.Max('id'))['id__max']
+            if max_id is None:
+                self.id = 10001
+            else:
+                self.id = max_id + 1
+        if self.customer_name:
+            self.customer_name = self.customer_name.capitalize()
+        super().save(*args, **kwargs)
+    
     def __str__(self):
-        return f"Order #{self.id} - {self.customer_name}"
+        return f"Order #{self.id} - {self.customer_name}"   
 
 
 # 4. Status Management
