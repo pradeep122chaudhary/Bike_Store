@@ -75,6 +75,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'crm_system.wsgi.application'
 
 
+LOGIN_URL = '/'  
+
+
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 

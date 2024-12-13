@@ -1,26 +1,28 @@
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse,HttpResponse
 from django.views import View
 from django.db.models import Q
-
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 from django.shortcuts import render
 from .models import DeliveryOrder,BikeModel,StatusModel
-import json
+import pandas as pd
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 def order_list(request):
     orders = DeliveryOrder.objects.all()
     return render(request, 'orders/order_list.html', {'orders': orders})
 
-class Dashboard(View):
-    template='dashboard.html'
+class Dashboard(LoginRequiredMixin,View):
+    template = 'dashboard.html'
+
     def get(self, request):
-        print('hello mohan')
+        # Render the dashboard template for GET requests
         return render(request, self.template)
 
-  
     def post(self, request):
+        # Render the dashboard template for POST requests
         return render(request, self.template)
     
     
@@ -87,5 +89,49 @@ class LeadsList(View):
         return render(request, self.template, {'leads': leads})
     def post(self, request):
         return render(request, self.template)
+    
+
+
+
+@login_required
+def export_leads_to_excel(request):
+    if request.method == 'POST':
+        import json
+        data = json.loads(request.body)
+        ids = data.get('ids', [])
+        # Fetch selected leads
+        leads = DeliveryOrder.objects.filter(id__in=ids)
+        if not leads.exists():
+            return JsonResponse({'error': 'No data found to export'}, status=400)
+
+        # Prepare data for export
+        data = []
+        for lead in leads:
+            delivery_date = lead.delivery_date
+            delivery_date_str = delivery_date.strftime('%d-%m-%y') if delivery_date else ''
+
+            data.append({
+                'ID': lead.id,
+                'Customer Name': lead.customer_name,
+                'Gender': lead.gender,
+                'Mobile': lead.mobile,
+                'Address': lead.full_address,
+                'Delivery Date': delivery_date_str,
+                'Bike Model': lead.bike_model,
+                'Status': lead.status,
+            })
+
+        # Create DataFrame
+        df = pd.DataFrame(data)
+        # Export to Excel
+        response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = 'attachment; filename="leads.xlsx"'
+        with pd.ExcelWriter(response, engine='openpyxl') as writer:
+            df.to_excel(writer, index=False, sheet_name='Leads')
+
+        return response
+    else:
+        return JsonResponse({'error': 'Invalid request method'}, status=405)
+
     
 

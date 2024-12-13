@@ -27,12 +27,16 @@
                 <div class="card-body">
                     <h5 class="card-title">Leads Summary</h5>
 
+                    <!-- Export Button -->
+                    <button id="export-btn" class="btn btn-success mb-3">Export to Excel</button>
+
                     <!-- Table with stripped rows -->
                     <table class="table datatable">
                         <thead>
                             <tr>
+                                <th><input type="checkbox" id="select-all"></th>
                                 <th scope="col">#</th>
-                                <th scope="col" style="text-weight:100;">Customer</th>
+                                <th scope="col">Customer</th>
                                 <th scope="col">Gender</th>
                                 <th scope="col">Mobile</th>
                                 <th scope="col">Address</th>
@@ -45,17 +49,17 @@
                         <tbody>
                             {% for lead in leads %}
                             <tr>
+                                <td><input type="checkbox" class="row-checkbox" value="{{ lead.id }}"></td>
                                 <td>{{ lead.id }}</td>
                                 <td>{{ lead.customer_name }}</td>
                                 <td>{{ lead.gender }}</td>
                                 <td>{{ lead.mobile }}</td>
                                 <td>{{ lead.full_address }}</td>
-                                <td>{{ lead.delivery_date| date:"d-m-Y " }}</td> 
+                                <td>{{ lead.delivery_date|date:"d-m-Y" }}</td>
                                 <td>{{ lead.bike_model }}</td>
                                 <td>{{ lead.status }}</td>
                                 <td>
-                                    {% comment %} <a href="" class="btn btn-primary btn-sm">Edit</a>
-                                    <a href="" class="btn btn-danger btn-sm">Delete</a> {% endcomment %}
+                                    <!-- Add any actions here -->
                                 </td>
                             </tr>
                             {% endfor %}
@@ -72,12 +76,91 @@
 {% endblock content %}
 
 {% block datatable %}
-<script src="{% static 'vendors/tinymce/tinymce.min.js' %}"></script>
 <script src="{% static 'vendors/simple-datatables/simple-datatables.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert -->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // DataTable initialization
+    document.addEventListener('DOMContentLoaded', function () {
+        // Initialize the DataTable
         var table = new simpleDatatables.DataTable('.datatable');
+
+        // Select all and row checkboxes
+        const selectAllCheckbox = document.getElementById('select-all');
+        const rowCheckboxes = document.querySelectorAll('.row-checkbox');
+
+        // Handle "Select All" functionality
+        selectAllCheckbox.addEventListener('change', function () {
+            rowCheckboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+        });
+
+        // Handle Export to Excel
+        document.getElementById('export-btn').addEventListener('click', function () {
+            const selectedIds = Array.from(rowCheckboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+
+            if (selectedIds.length > 0) {
+                Swal.fire({
+                    title: 'Exporting Data...',
+                    text: 'Please wait while the data is being exported.',
+                    icon: 'info',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    willOpen: () => {
+                        Swal.showLoading();
+                    },
+                });
+
+                fetch("{% url 'export_leads_to_excel' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({ ids: selectedIds })
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.blob();
+                        } else {
+                            throw new Error("Export failed.");
+                        }
+                    })
+                    .then(blob => {
+                        Swal.close(); // Close SweetAlert after successful fetch
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'leads.xlsx';
+                        document.body.appendChild(a);
+                        a.click();
+                        a.remove();
+
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Data exported successfully.',
+                            icon: 'success',
+                            confirmButtonText: 'OK',
+                        });
+                    })
+                    .catch(error => {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: error.message,
+                            icon: 'error',
+                            confirmButtonText: 'OK',
+                        });
+                    });
+            } else {
+                Swal.fire({
+                    title: 'No Rows Selected',
+                    text: 'Please select at least one row to export.',
+                    icon: 'warning',
+                    confirmButtonText: 'OK',
+                });
+            }
+        });
     });
 </script>
 {% endblock datatable %}

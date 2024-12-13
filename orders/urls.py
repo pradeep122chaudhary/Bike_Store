@@ -6,5 +6,7 @@ urlpatterns = [
     path('home/', views.Dashboard.as_view(), name='Dashboard'),
     path('new/lead/', views.AddNewLead.as_view(), name='AddNewLead'),
     path('leads/view', views.LeadsList.as_view(), name='LeadsList'),
+    path('export-leads-to-excel/', views.export_leads_to_excel, name='export_leads_to_excel'),
+
 
 ]
