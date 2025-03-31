@@ -3,8 +3,6 @@ from django.http import JsonResponse,HttpResponse
 from django.views import View
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
-
-# Create your views here.
 from django.shortcuts import render
 from .models import DeliveryOrder,BikeModel,StatusModel
 import pandas as pd
@@ -18,16 +16,16 @@ class Dashboard(LoginRequiredMixin,View):
     template = 'dashboard.html'
 
     def get(self, request):
-        # Render the dashboard template for GET requests
+
         return render(request, self.template)
 
     def post(self, request):
-        # Render the dashboard template for POST requests
+
         return render(request, self.template)
     
     
 class AddNewLead(View):
-    template_name = 'new_lead.html'  # Matches your template file name
+    template_name = 'new_lead.html'  
 
     def get(self, request):
         status = StatusModel.objects.all()
@@ -99,7 +97,6 @@ def export_leads_to_excel(request):
         import json
         data = json.loads(request.body)
         ids = data.get('ids', [])
-        # Fetch selected leads
         leads = DeliveryOrder.objects.filter(id__in=ids)
         if not leads.exists():
             return JsonResponse({'error': 'No data found to export'}, status=400)
