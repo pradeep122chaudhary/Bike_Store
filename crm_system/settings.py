@@ -81,14 +81,22 @@ LOGIN_URL = '/'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'crm_db',          # The name of your PostgreSQL database
+#         'USER': 'postgres',          # Your PostgreSQL username
+#         'PASSWORD': 'root',  # Your PostgreSQL password
+#         'HOST': 'localhost',                   # Typically 'localhost' if running PostgreSQL locally
+#         'PORT': '5432',                        # Default PostgreSQL port
+#     }
+# }
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'crm_db',          # The name of your PostgreSQL database
-        'USER': 'postgres',          # Your PostgreSQL username
-        'PASSWORD': 'root',  # Your PostgreSQL password
-        'HOST': 'localhost',                   # Typically 'localhost' if running PostgreSQL locally
-        'PORT': '5432',                        # Default PostgreSQL port
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
     }
 }
 
